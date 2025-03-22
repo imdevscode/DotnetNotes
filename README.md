@@ -9,6 +9,10 @@ using ** or __
 **This is Bold text**  
 __This is also Bold text__
 
+## Inline-code
+For inline code, wrap the code in backticks (``) like git clone shown below:  
+Use the `git clone` command to clone a repository.
+
 ## Code-formatting
 using ` sign  
 ```csharp
