@@ -1,24 +1,24 @@
-# DotnetNotes
-Q. Difference between action filter and middleware in web api
-Ans: They both are used to process the request but are executed at different point in request pipeline. 
-Action Filter
-- They are designed to run before (OnActionExecuting) & after (OnActionExecuted) the action method of controller.
-- they are useful for task that are specific to individual action or controller, like Validation, Caching a particular action, Authorization etc.
-- We can apply Action filters directly to actions or controllers using attributes.
-Ex:-
+# Format Readme file
+## Table of Contents
+- [Bold Text](#bold-text)
+- [Code formatting](#code-formatting)
+- [New-Line](#new-line)
+  
+## Bold-text
+using ** or __  
+**This is Bold text**  
+__This is also Bold text__
+
+## Code-formatting
+using ` sign  
 ```csharp
+//This is C sharp code
 public class MyActionFilter : ActionFilterAttribute
 {
-    public override void OnActionExecuting(HttpActionContext actionContext)
-    {
-        // Logic before action executes
-    }
-
-    public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
-    {
-        // Logic after action executes
-    }
 }
 ```
-This will render as a nicely formatted C# code block with syntax highlighting on GitHub.
-This will render as a nicely formatted C# code block with syntax highlighting on GitHub.
+## New-Line
+To break a line (without starting a new paragraph), add two spaces at the end of the line, then press Enter (new line):  
+This is the first line.  
+This is the second line.
+
