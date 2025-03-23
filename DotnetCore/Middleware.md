@@ -149,7 +149,7 @@ public class HomeController : ControllerBase
 }
 ```
 ## 6. Endpoitnt Middleware (UseEndpoints())
-- Endpoint middleware executes the endpoint (controller action or razor page etc) matched to the routes defined by `UseRouting()` middleware. Hence `UseEndpoint()` is used after `UseRouting()` middleware.
+- Endpoint middleware executes the endpoint (i.e. controller action or razor page etc) matched to the routes defined by `UseRouting()` middleware. Hence `UseEndpoint()` is used after `UseRouting()` middleware.
 - Whereas `UseRouting()` middleware maintain routes which matches the incoming Http request based on the Url, Http method etc.
 ```csharp
 app.UseRouting();        // Enables endpoint routing
