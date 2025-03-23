@@ -1,16 +1,41 @@
 # Default middleware in ASP.net core
 - ASP.net core provide set of default middleware which are executed in specific order to handle different concern like routing, authentication, error handling. Below are few default middlewares:
-## Exception Handling Middleware (UseExceptionHandler)
+## 1. Exception Handling Middleware (UseExceptionHandler)
 - It is responsible for handling unhandled exception of the application during request processing.
 - When error occure, it can be configured to show Error page or redirect to error handling endpoint: `app.UseExceptionHandler("/Home/Error");`
-## Static Files Middleware (UseStaticFiles)
+
+## 2. HTTPS Middleware (UseHsts() and UseHttpsRedirection())
+- They both enforce use of HTTPS (Hyper Text Transfer Protocol Secure) for our application, but they are used at different stages.
+### UseHttpsRedirection() Middleware
+- This middleware automatically redirects all HTTP incoming request to HTTPS.
+- It doesn't add any header like UseHsts() and just redirect.
+- This middleware relies on server-side redirection and cannot prevent initial HTTP requests like HSTS.
+### UseHsts() Middleware
+- `UseHsts()` enforces **HSTS (HTTP Strict Transport Security)** policy, which tells browser to use **HTTPS** for a specified period.
+- This is done by adding **Strict Transport Security** HTTP header with specified duration in `max-age` in respose to browser.
+`Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`
+	`max-age=31536000` → Enforce HTTPS for 1 year.
+	`includeSubDomains` → Applies to subdomains as well.
+	`preload` → Allows browsers to preload the rule (optional).
+- It does not automatically redirect HTTP to HTTPS (you need UseHttpsRedirection() for that).
+- Only works after the first request (since the browser must first receive the HSTS header).
+- Example:
+```csharp
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts(); // Enforces HTTPS at the browser level
+}
+
+app.UseHttpsRedirection(); // Redirects HTTP requests to HTTPS
+```
+## 3. Static Files Middleware (UseStaticFiles)
 - This middleware serve static files like CSS, images, javascript & other resources from "wwwroot" folder by default.
 - Example, When you access wwwroot/image.jpg, this middleware will serve the file directly 
 ```cs    app.UseStaticFiles();  // Serves static files from wwwroot ```
-## Routing Middleware (UseRouting)
+## 4. Routing Middleware (UseRouting)
 - It routes incoming HTTP requests to appropriate endpoints (controllers, Razor pages, etc.) by looking at the URL and determines which controller and action (or page) to invoke.
 `    app.UseRouting();`
-## Authentication Middleware (UseAuthentication)
+## 5. Authentication Middleware (UseAuthentication)
 - It is responsible for enabling authentication for all incoming Http request for application to know who the user is.
 - First this middleware will look for the Authentication scheme configured for authenticating the requests like JWT token, Cookie-based, IdentityServer, API key or custom.
 - Secondly, it will vaildate the credentials extracted above against the scheme configured.
@@ -59,7 +84,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 - You can also create your custom authentication scheme, such as API key authentication.
 
 
-## Authorization Middleware (UseAuthorization)
+## 6. Authorization Middleware (UseAuthorization)
 - Authorization middleware ensures authenticated user has needed permissions to access the application using below steps:
 - First, it check user is authenticated by ensuring that `HttpContext.User` contain the valid `ClaimPrincipal` object.
 - Then, it check the user has required Permissions (like Admin or User), Claims (like "CanEditProfile", "MakePayment") or Policies.
@@ -148,7 +173,7 @@ public class HomeController : ControllerBase
     }
 }
 ```
-## Endpoitnt Middleware (UseEndpoints())
+## 7. Endpoitnt Middleware (UseEndpoints())
 - Endpoint middleware executes the endpoint (i.e. controller action or razor page etc) matched to the routes defined by `UseRouting()` middleware. Hence `UseEndpoint()` is used after `UseRouting()` middleware.
 - Whereas `UseRouting()` middleware creates routes matching the incoming Http request based on the Url, Http method etc.
 ```csharp
@@ -160,4 +185,34 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers(); // This maps controller actions to routes
 });
 ```
+
+## Sequence order of all middleware
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage(); // Show detailed error page in development
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts(); // Secure HTTP headers
+}
+
+app.UseHttpsRedirection(); // Redirect to HTTPS
+app.UseStaticFiles(); // Serve static files
+
+app.UseRouting(); // Start the routing process
+
+app.UseAuthentication(); // Authenticate requests
+app.UseAuthorization();  // Authorize requests
+
+app.MapControllers(); // Map controllers to routes
+
+app.Run();
+
+```
+
 
