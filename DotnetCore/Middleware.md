@@ -13,7 +13,7 @@
 ### UseHsts() Middleware
 - `UseHsts()` enforces **HSTS (HTTP Strict Transport Security)** policy, which tells browser to use **HTTPS** for a specified period.
 - This is done by adding **Strict Transport Security** HTTP header with specified duration in `max-age` in respose to browser.
-`Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`
+`Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`  
 	`max-age=31536000` → Enforce HTTPS for 1 year.
 	`includeSubDomains` → Applies to subdomains as well.
 	`preload` → Allows browsers to preload the rule (optional).
