@@ -74,5 +74,90 @@ var app = builder.Build();
 app.UseAuthentication();  // Authenticate the request
 app.UseAuthorization();   // Authorize the request
 ```
+- Under Authorization, we can configure different Roles, Claims & Policies which can be applied to different controllers or actions using `[Authorize]` attribute.
+- Example, below we have added 2 Policies (AdminPolicy & ManagerPolicy) and 2 Roles (Admin & Manager) and 1 Claim (CanEdit) to Authorization service.
+```csharp
+var builder = WebApplication.CreateBuilder(args);
 
+// Add Authentication service to builder
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "https://your-identity-server";
+        options.Audience = "your-api";
+    });
+
+// Add Authorization service to builder
+builder.Services.AddAuthorization(options =>
+{
+    // Configure a role-based policy
+    options.AddPolicy("AdminPolicy", policy => 
+    {
+        policy.RequireRole("Admin");
+    });
+
+    // Configure a custom policy combining roles and claims
+    options.AddPolicy("ManagerPolicy", policy =>
+    {
+        policy.RequireRole("Manager");
+        policy.RequireClaim("CanEdit", "true");
+    });
+});
+
+builder.Services.AddControllers();
+
+var app = builder.Build();
+
+// Enable authentication and authorization middleware
+app.UseAuthentication();  // Authenticate the request
+app.UseAuthorization();   // Authorize the request
+
+// Map controllers or endpoints
+app.MapControllers();
+
+app.Run();
+```
+- Now `[Authorize]` attribute can be used to apply them on different controllers or actions.
+```csharp
+[Authorize(Roles = "Admin")]  // Only users with "Admin" role can access this controller
+public class AdminController : ControllerBase {....}
+
+[Authorize(Policy = "ManagerPolicy")]  // Only users who meet the "ManagerPolicy" can access this controller
+public class ManagerController : ControllerBase {...}
+
+//Using Multiple Policies in [Authorize]
+[Authorize(Policy = "AdminOnly")]  // Requires the "AdminOnly" policy
+[Authorize(Policy = "ManagerPolicy")]  // Requires the "ManagerPolicy" policy
+public class MultiPolicyController : ControllerBase
+
+
+public class HomeController : ControllerBase
+{
+    [HttpGet]
+    [Authorize(Roles = "Admin")]  // Only Admins can access this action
+    public IActionResult GetAdminData()
+    {
+        return Ok("This is admin data.");
+    }
+
+    [HttpGet]
+    [Authorize(Policy = "ManagerPolicy")]  // Only users meeting ManagerPolicy can access this action
+    public IActionResult GetManagerData()
+    {
+        return Ok("This is manager data.");
+    }
+}
+```
+## 6. Endpoitnt Middleware (UseEndpoints())
+- Endpoint middleware executes the endpoint (controller action or razor page etc) matched to the routes defined by `UseRouting()` middleware. Hence `UseEndpoint()` is used after `UseRouting()` middleware.
+- Whereas `UseRouting()` middleware maintain routes which matches the incoming Http request based on the Url, Http method etc.
+```csharp
+app.UseRouting();        // Enables endpoint routing
+app.UseAuthentication(); // If authentication is needed
+app.UseAuthorization();  // Enables authorization policies
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers(); // This maps controller actions to routes
+});
+```
 
