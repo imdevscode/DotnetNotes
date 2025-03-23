@@ -1,0 +1,11 @@
+# Basic Azure DevOps Questions
+- What is Azure DevOps, and how does it help in software development?
+- Explain the key components of Azure DevOps Services.
+- What is the difference between Azure DevOps Services and Azure DevOps Server?
+- What is a pipeline in Azure DevOps?
+- What are the benefits of using Azure Repos?
+- How do you create a CI/CD pipeline in Azure DevOps?
+- What is the purpose of Azure Artifacts?
+- How does Azure DevOps support Agile project management?
+- What is YAML, and how is it used in Azure Pipelines?
+- What are service connections in Azure DevOps?
