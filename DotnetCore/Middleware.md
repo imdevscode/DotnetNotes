@@ -30,8 +30,8 @@ app.UseHttpsRedirection(); // Redirects HTTP requests to HTTPS
 ```
 ## 3. Static Files Middleware (UseStaticFiles)
 - This middleware serve static files like CSS, images, javascript & other resources from "wwwroot" folder by default.
-- Example, When you access wwwroot/image.jpg, this middleware will serve the file directly 
-```cs    app.UseStaticFiles();  // Serves static files from wwwroot ```
+- Example, When you access wwwroot/image.jpg, this middleware will serve the file directly  
+  `    app.UseStaticFiles();  // Serves static files from wwwroot `
 ## 4. Routing Middleware (UseRouting)
 - It routes incoming HTTP requests to appropriate endpoints (controllers, Razor pages, etc.) by looking at the URL and determines which controller and action (or page) to invoke.
 `    app.UseRouting();`
