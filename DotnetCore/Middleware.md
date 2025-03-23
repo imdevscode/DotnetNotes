@@ -61,7 +61,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 ## 5. Authorization Middleware (UseAuthorization)
 - Authorization middleware ensures authenticated user has needed permissions to access the application using below steps:
-- First, it check user is authenticated by ensuring `HttpContext.User` contain the valid `ClaimPrincipal` object.
+- First, it check user is authenticated by ensuring that `HttpContext.User` contain the valid `ClaimPrincipal` object.
 - Then, it check the user has required Permissions (like Admin or User), Claims (like "CanEditProfile", "MakePayment") or Policies.
 - Also it return **HTTP 403 Forbidden**, if user authenticated but lack necessary permissions.
 - And it return **HTTP 401 Unauthorized** status, if user not authenticated.
