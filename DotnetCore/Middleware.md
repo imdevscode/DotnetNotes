@@ -43,10 +43,10 @@ app.MapControllers();
 app.Run();
 ```
 ### Common Authentication Schemes
-##### a) JWT Bearer Authentication
+#### a) JWT Bearer Authentication
 - If you're using JWT tokens (e.g., OAuth2, IdentityServer), you can configure the authentication middleware like this:
 
-##### b) Cookie Authentication: 
+#### b) Cookie Authentication: 
 - If you're using cookie-based authentication.
 ```cs
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -55,7 +55,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Account/Login";
     });
 ```
-##### c) API Key or Custom Authentication: 
+#### c) API Key or Custom Authentication: 
 - You can also create your custom authentication scheme, such as API key authentication.
 
 
