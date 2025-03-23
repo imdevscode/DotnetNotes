@@ -1,16 +1,16 @@
 # Default middleware in ASP.net core
 - ASP.net core provide set of default middleware which are executed in specific order to handle different concern like routing, authentication, error handling. Below are few default middlewares:
-## 1. Exception Handling Middleware (UseExceptionHandler)
+## Exception Handling Middleware (UseExceptionHandler)
 - It is responsible for handling unhandled exception of the application during request processing.
 - When error occure, it can be configured to show Error page or redirect to error handling endpoint: `app.UseExceptionHandler("/Home/Error");`
-## 2. Static Files Middleware (UseStaticFiles)
+## Static Files Middleware (UseStaticFiles)
 - This middleware serve static files like CSS, images, javascript & other resources from "wwwroot" folder by default.
 - Example, When you access wwwroot/image.jpg, this middleware will serve the file directly 
 ```cs    app.UseStaticFiles();  // Serves static files from wwwroot ```
-## 3. Routing Middleware (UseRouting)
+## Routing Middleware (UseRouting)
 - It routes incoming HTTP requests to appropriate endpoints (controllers, Razor pages, etc.) by looking at the URL and determines which controller and action (or page) to invoke.
 `    app.UseRouting();`
-## 4. Authentication Middleware (UseAuthentication)
+## Authentication Middleware (UseAuthentication)
 - It is responsible for enabling authentication for all incoming Http request for application to know who the user is.
 - First this middleware will look for the Authentication scheme configured for authenticating the requests like JWT token, Cookie-based, IdentityServer, API key or custom.
 - Secondly, it will vaildate the credentials extracted above against the scheme configured.
@@ -59,7 +59,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 - You can also create your custom authentication scheme, such as API key authentication.
 
 
-## 5. Authorization Middleware (UseAuthorization)
+## Authorization Middleware (UseAuthorization)
 - Authorization middleware ensures authenticated user has needed permissions to access the application using below steps:
 - First, it check user is authenticated by ensuring that `HttpContext.User` contain the valid `ClaimPrincipal` object.
 - Then, it check the user has required Permissions (like Admin or User), Claims (like "CanEditProfile", "MakePayment") or Policies.
@@ -148,9 +148,9 @@ public class HomeController : ControllerBase
     }
 }
 ```
-## 6. Endpoitnt Middleware (UseEndpoints())
+## Endpoitnt Middleware (UseEndpoints())
 - Endpoint middleware executes the endpoint (i.e. controller action or razor page etc) matched to the routes defined by `UseRouting()` middleware. Hence `UseEndpoint()` is used after `UseRouting()` middleware.
-- Whereas `UseRouting()` middleware maintain routes which matches the incoming Http request based on the Url, Http method etc.
+- Whereas `UseRouting()` middleware creates routes matching the incoming Http request based on the Url, Http method etc.
 ```csharp
 app.UseRouting();        // Enables endpoint routing
 app.UseAuthentication(); // If authentication is needed
