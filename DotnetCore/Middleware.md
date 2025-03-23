@@ -6,11 +6,11 @@
 
 ## 2. HTTPS Middleware (UseHsts() and UseHttpsRedirection())
 - They both enforce use of HTTPS (Hyper Text Transfer Protocol Secure) for our application, but they are used at different stages.
-### UseHttpsRedirection() Middleware
+### 2.1 UseHttpsRedirection() Middleware
 - This middleware automatically redirects all HTTP incoming request to HTTPS.
 - It doesn't add any header like UseHsts() and just redirect.
 - This middleware relies on server-side redirection and cannot prevent initial HTTP requests like HSTS.
-### UseHsts() Middleware
+### 2.2 UseHsts() Middleware
 - `UseHsts()` enforces **HSTS (HTTP Strict Transport Security)** policy, which tells browser to use **HTTPS** for a specified period.
 - This is done by adding **Strict Transport Security** HTTP header with specified duration in `max-age` in respose to browser.
 `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`  
