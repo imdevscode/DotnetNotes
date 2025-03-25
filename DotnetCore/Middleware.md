@@ -3,12 +3,12 @@
 - Middleware allow to add functionality to your application without changing underlying code.
 - It can be used in wide area like Authentication, logging, compression, caching etc.
 - Middleware sits between Web server & your Application. As when a request come to web server, it passed through series of middleware before it reaches the application, Similarly response from application goes through series of middleware before back to client.
+- 
 ## Default middleware in ASP.net core
 - ASP.net core provide set of default middleware which are executed in specific order to handle different concern like routing, authentication, error handling. Below are few default middlewares:
 ### 1. Exception Handling Middleware (UseExceptionHandler)
 - It is responsible for handling unhandled exception of the application during request processing.
 - When error occure, it can be configured to show Error page or redirect to error handling endpoint: `app.UseExceptionHandler("/Home/Error");`
-
 ### 2. HTTPS Middleware (UseHsts() and UseHttpsRedirection())
 - They both enforce use of HTTPS (Hyper Text Transfer Protocol Secure) for our application, but they are used at different stages.
 #### 2.1 UseHttpsRedirection() Middleware
