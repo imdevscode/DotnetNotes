@@ -8,6 +8,7 @@
 - **3) Open-Source and Modular Design**: .Net core in open-source, as its source-code available on GitHub. It is also modular so we can include only parts of .net core that our application need.  
 - **4) .NET Core CLI**: .Net Core CLI allows developers to create, build, run, and deploy applications from the command line, regardless of their OS. The same commands work the same way on Windows, macOS, and Linux.
 - **5) Platform Detection at Runtime**: It provides APIs to detect platform at runtime, which allow to write platform-specific code where needed. Ex: `System.Runtime.InteropServices.RuntimeInformation`
+- **6) Docker & Container support**: - .Net core is compatible with Docker & Containerized environment, which make it consistent to deploy application in different environments (cloud, on-premise, & different OSes).
 ```csharp
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 {
