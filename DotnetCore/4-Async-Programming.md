@@ -9,7 +9,7 @@
 - **Passing the CancellationToken**: CancellationToken is passed to asynchronous methods or tasks that support cancellation like Task.Delay, Task.Run, or HttpClient.GetAsync, accept a CancellationToken.
 
 ### Few real-time scenarios where CancellationToken is used
-#### For cancelling a Http request can be User initiated Cancellation
+- #### For cancelling a Http request can be User initiated Cancellation
 	```csharp
 	using var cts = new CancellationTokenSource();
 
@@ -29,7 +29,7 @@
 		Console.WriteLine("Request was canceled.");
 	}
 	```
-#### For cancelling a Http request if timout more than 10 sec
+- #### For cancelling a Http request if timout more than 10 sec
 	```csharp
 	using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10)); // Auto-cancel after 10 seconds
 	HttpClient client = new HttpClient();
