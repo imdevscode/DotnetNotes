@@ -1,12 +1,12 @@
 ## What is CancellationToken in async programming? 
 - CancellationToken is used to cancel the running asynchronous operation or Task before they complete, due to user action or other conditions.
 ### Key parts of how it works:
-- **Creating a CancellationTokenSource**: `CancellationToken` is generated from `CancellationTokenSource` which can then passed to async operation or task.
+1) **Creating a CancellationTokenSource**: `CancellationToken` is generated from `CancellationTokenSource` which can then passed to async operation or task.
 	```csharp
 	CancellationTokenSource cts = new CancellationTokenSource();
 	CancellationToken token = cts.Token;
 	```
-- **Passing the CancellationToken**: CancellationToken is passed to asynchronous methods or tasks that support cancellation like Task.Delay, Task.Run, or HttpClient.GetAsync, accept a CancellationToken.
+2) **Passing the CancellationToken**: CancellationToken is passed to asynchronous methods or tasks that support cancellation like Task.Delay, Task.Run, or HttpClient.GetAsync, accept a CancellationToken.
 
 ### Few real-time scenarios where CancellationToken is used
 - #### For cancelling a Http request can be User initiated Cancellation
