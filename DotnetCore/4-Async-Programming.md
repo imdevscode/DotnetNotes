@@ -1,0 +1,47 @@
+## What is CancellationToken in async programming? 
+- CancellationToken is used to cancel the running asynchronous operation or Task before they complete, due to user action or other conditions.
+### Key parts of how it works:
+- **Creating a CancellationTokenSource**: `CancellationToken` is generated from `CancellationTokenSource` which can then passed to async operation or task.
+	```csharp
+	CancellationTokenSource cts = new CancellationTokenSource();
+	CancellationToken token = cts.Token;
+	```
+- **Passing the CancellationToken**: CancellationToken is passed to asynchronous methods or tasks that support cancellation like Task.Delay, Task.Run, or HttpClient.GetAsync, accept a CancellationToken.
+
+### Few real-time scenarios where CancellationToken is used
+#### For cancelling a Http request can be User initiated Cancellation
+	```csharp
+	using var cts = new CancellationTokenSource();
+
+	HttpClient client = new HttpClient();
+	Task<HttpResponseMessage> requestTask = client.GetAsync("https://jsonplaceholder.typicode.com/todos/1", cts.Token);
+
+	await Task.Delay(100); // Simulate some delay before cancelling
+	cts.Cancel(); // Cancel the request
+
+	try
+	{
+		HttpResponseMessage response = await requestTask;
+		Console.WriteLine($"Response: {await response.Content.ReadAsStringAsync()}");
+	}
+	catch (OperationCanceledException)
+	{
+		Console.WriteLine("Request was canceled.");
+	}
+	```
+#### For cancelling a Http request if timout more than 10 sec
+	```csharp
+	using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10)); // Auto-cancel after 10 seconds
+	HttpClient client = new HttpClient();
+
+	try
+	{
+		HttpResponseMessage response = await client.GetAsync("https://jsonplaceholder.typicode.com/todos/1", cts.Token);
+		Console.WriteLine($"Response: {await response.Content.ReadAsStringAsync()}");
+	}
+	catch (OperationCanceledException)
+	{
+		Console.WriteLine("Request timed out.");
+	}
+	```
+#### Cancelling File Upload 
