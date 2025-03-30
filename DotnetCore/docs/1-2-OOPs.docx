@@ -1,0 +1,304 @@
+Encapsulation
+Encapsulation is data hiding (Information hiding).
+It is the process of 
+Hides data from outside by protecting (binding) Data members and Methods into a single unit (like class, struct). 
+Encapsulation is achieved using the Access modifier.
+
+C# supports the following six access specifiers:
+public: The public members can be accessed by any other code in the same assembly or another assembly that references it.
+private: The private members can be accessed only by code in the same class.
+protected: The protected Members in C# are available within the same class as well as to the classes that are derived from that class.
+internal: The internal members can be accessed by any code in the same assembly, but not from another assembly.
+protected internal: The protected internal members can be accessed by any code in the assembly in which it’s declared, or from within a derived class in another assembly.
+private protected: The private protected members can be accessed by types derived from the class that is declared within its containing assembly.
+Eg:- 
+class Account
+{
+	public long AccountNumber;
+	public string Name;
+	private int _balance;
+	public void Balance()
+	{	get	{	return _balance;	}	}
+	
+	public void WithdrawAmount(int amt)
+	{
+		....
+		CalculateBalance();
+	}
+	
+	private void CalculateBalance() {	…..   }
+}
+
+Here Account class data is hidden and can only be accessed using the object of Account.
+Also the CalculateBalance() method can not be used using objects as well.
+
+Abstraction
+→ Abstraction is the process of hiding Implementation & showing only essential information to user.
+→ It can be achieved by using either abstract classes or interfaces.
+→ Abstract classes can only be inherited and can not be used to create objects.
+interface IEmployee
+{
+	void Salary();
+	void GetLeaves();
+	void Bonus();
+}
+class PermanentEmployee : IEmployee
+{
+	public void Salary()		{	....	}
+	private void GetLeaves()	{	....	}
+	private void Bonus()		{	....	}
+}
+class ContractEmployee : IEmployee
+{
+	public void Salary()		{	....	}
+	private void GetLeaves()	{	....	}
+	private void Bonus()		{	....	}
+}
+//	CLIENT
+void Main()
+{
+	IEmployee emp = new PermanentEmployee();
+	emp.Salary();
+	
+	IEmployee emp = new ContractEmployee();
+	emp.Salary();
+}
+
+
+Here, the client will only know the services which are defined in the interface IEmployee but how the services are implemented, the client will never know.
+
+
+
+Encapsulation vs Abstraction
+Encapsulation
+Abstraction
+Hides data from outside by protecting (binding) it within a unit (like class, struct).
+Hide implementation and show only required data.
+Achieved using Access modifiers.
+Achieved using Interface & Abstract classes.
+It is Data hiding.
+It is Implementation hiding.
+
+
+Abstract vs Interface  
+Abstract
+Interface
+Doesn’t support multiple inheritance.
+Support multiple inheritance.
+Contain incomplete(abstract) & complete members.
+Contain only incomplete members.
+Only complete members can be static.
+Can not contain static members.
+No restriction on access modifiers of its members.
+By default only public members.
+Contain constructors.
+Can not contain constructor.
+Contain data members
+Can not contain data members.
+
+
+
+Polymorphism = Many Forms
+Two type:-
+Static polymorphism / compile-time polymorphism / early binding
+Dynamic polymorphism / Run-time polymorphism / late binding
+Three approach to implement:-
+Overloading
+Overriding
+Hiding
+
+Overloading 
+It is classified into three types, such as
+Method overloading / Function overloading
+Constructor overloading
+Operator overloading.
+
+
+Method Overriding
+Changing the implementation of base class method in derived class.
+Method in the parent class must be declared as virtual then only the child classes get the permission for overriding that method.
+Even if the method is declared as virtual the child class may or may not override the method.
+
+
+Method Hiding
+We re-implement the method of the parent class even if those methods are not declared as virtual, that is without parent permission we are re-implementing the methods. The Syntax is given below.
+
+
+Class1:
+Public void display()
+Class2 : Class1
+Public new void display()
+
+Using the new keyword for re-implementing the methods in the child class is optional and if used will give information to hiding.
+
+
+→ In method overriding a base class reference variable pointing to a child class object will invoke the overridden method in the child class. 
+In method hiding a base class reference variable pointing to a child class object will invoke the hidden method in the base class, as the derived class re-implementation is hidden from base object reference.
+
+
+→ If a method is simply hidden then the implementation to call is based on the compile-time type of the argument “this”. Whereas if a method is overridden then the implementation to be called is based on the run-time type of the argument “this”. New is reference-type specific, overriding is object-type specific.
+
+
+→ Hidden base class methods can be accessed from the derived class by casting the instance of the derived class to an instance of the base class as shown in the example below:
+BaseClass:
+Public virtual void Method() {....}
+
+DerivedClass
+Public new void Method() {.....}
+
+Static void Main()
+DerivedClass dc = new DerivedClass ();
+((BaseClass)dc).Method()
+
+
+
+New & Override keyword
+→ new keyword completely hides the base class implementation and creates a
+new method.It can be concluded that the method defined is independent of
+base class method.
+Base class object will call base class method.
+override keyword overrides the base class implementation. It helps in existence of different versions of method and appropriate version is called dynamically. Objects of derived class will call this method instead of base class method.
+Also base class object reference initialized with derived class will also override base class implementation and will call derived class method.
+
+Abstract member
+An abstract class cannot be instantiated.
+An abstract class can have constructor and destructor.
+An abstract class cannot be a sealed class because the sealed modifier prevents a class from being inherited.
+An abstract class contains abstract as well as non-abstract members.
+An abstract class members can be private, protected and internal.
+Abstract members cannot have a private access modifier.
+Abstract members are implicitly virtual and must be implemented by a non-abstract derived class.
+
+
+Virtual & Abstract method
+→ A virtual method may or may not have a body whereas an abstract method should not have a body.
+
+
+Relationships in OOPs
+
+References:- 
+https://www.dotnettricks.com/learn/oops/understanding-association-aggregation-composition-and-dependency-relationship
+https://medium.com/@ibrahimyengue/association-aggregation-and-composition-in-c-8cbeaa81201d
+
+→ One advantage of OOPs is code reuse and this reusability is achieved by rlationship between classes.
+→ OOPs support 4 types of relationships that are: 
+Inheritance;	Association;	Composition;	Aggregation;
+
+
+
+1. Inheritence (Is-A)
+→ when a derived class inherits from a base class, it acquires properties and behaviors of the base class. 
+→ Tightly coupled as if base class changes then derived class has to change.
+→ Is-A relationship. It is represented by an arrow → towards the base class. 
+eg:- A Car is a Vehicle. Car → Vehicle
+It is also used in UML notation.
+
+
+2. Association (Has-A)
+→ It represents a relationship between two or more objects where all objects have their own lifecycle and there is no owner. 
+→ This is represented by a solid line. 
+→ Eg:- Let’s take an example of a relationship between Teacher and Student. Multiple students can associate with a single teacher and a single student can associate with multiple teachers. → But there is no ownership between the objects and both have their own lifecycle. Both can be created and deleted independently.
+class Teacher
+{
+	public void GetTeacherName() {	...		}
+	public void AddStudent(Student obj)
+	{	....	}
+}
+class Student
+{	
+	public void GetStudentName() {	...		}
+}
+static void Main(string[] args)
+{
+	Student student = new Student();
+	Teacher teacher = new Teacher();
+	teacher.AddStudent(student);
+}
+
+
+
+
+3. Aggregation 
+→ It is a specialized form of Association where objects have their own lifecycle but there is ownership. By own lifecycle means if class object is deleted, the other object doesn't die.
+→ Like Teacher & Department, Teacher is a part of multiple Department but if we delete Department, Teacher object will not destroy.
+class Teacher 
+{
+	public List<Department> depts = new List<Department>();	
+	...
+}
+
+→ This is represented by a hollow diamond followed by a line. 
+
+
+4. Composition
+→ In Composition, child objects do not have their lifecycle without the Parent object. If a parent object dies, all its child objects will also die. This represents the “death” relationship. 
+Composition dependency is added from constructor.
+→ Like relation between House is a combination of several component like Ceiling, Floor.
+public class House
+{
+    private readonly Ceiling _ceiling;
+    private readonly Floor _floor;
+    
+    public House()
+    {
+        _ceiling = new Ceiling();
+        _floor = new Floor();
+    }
+    public string GetCeiling() => _ceiling.BuildCeiling();
+    public string GetFloor() => _floor.BuildFloor();
+}
+
+Here if we delete House object then Ceiling & Floor object will automatically deleted.
+
+Inheritance vs Composition
+1→ Inheritance is all about the Specialization, as derived class is a specialized version of the base class and promotes code reuse. It implicitly inherits all non-private members of its base classes, whether direct or indirect. It can also hide or override the inherited members.
+On the other hand, the composition is about the Association of objects of different classes.
+
+2→ In Inheritance, we get a tight coupling of code, and changes in the base class may affect the derived classes.
+Whereas, Composition provides loose coupling. We can add another component for any new future changes instead of changing inheritance hierarchy.
+
+3→ One advantage with Inheritance is that we get all the base class functionality in derived class without any extra cost.
+
+
+
+Note:- Here Constructor of Base class is always executed first. It is the responsibility of Derived class to resolve dependency for Base class constructor.
+
+
+
+Q. Difference b/w “protected internal” and internal ?
+Ans:-
+→ Protected Internal, accessible from the same assembly or any derived class.
+
+→ Internal members are accessible in the same assembly only. So within an assembly(DLL) it is internal only. By default Class in C# have Internal access modifier. 
+
+
+Q. Can we have constructor for abstract class though we can’t create its object?
+Ans:- Yes, we can have constructor for abstract class though we can’t create object of abstract class. As when we create object of derived class, then constructor of abstract class is implicitly called.
+abstract class A
+{
+	public DateTime TimeCreated { get; private set; }
+	protected A()
+	{
+		this.TimeCreated = DateTime.Now;
+		Console.WriteLine("Abstract class Constructor");
+	}
+}
+class B : A
+{
+	public B()
+	{ Console.WriteLine("Derived class constructor"); }
+}
+class Program
+{
+	static void Main(string[] args)
+	{
+		B obj = new B();
+	}
+}
+
+
+Output 
+Abstract class Constructor
+Derived class constructor
+
+
